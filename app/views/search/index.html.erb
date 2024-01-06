@@ -1,0 +1,11 @@
+<h1>JSON Search</h1>
+
+<%= form_tag(search_path, method: :post, remote: true) do %>
+  <%= label_tag :query, 'Enter search query:' %>
+  <%= text_field_tag :query, nil, id: 'searchInput' %>
+<% end %>
+
+<div id="searchResults">
+</div>
+
+<%= javascript_include_tag 'search' %>
