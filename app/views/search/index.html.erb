@@ -1,11 +1,18 @@
-<h1>JSON Search</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <%= stylesheet_link_tag 'styles' %>
+  <%= javascript_include_tag 'search' %>
+</head>
+<body>
 
-<%= form_tag(search_path, method: :post, remote: true) do %>
-  <%= label_tag :query, 'Enter search query:' %>
-  <%= text_field_tag :query, nil, id: 'searchInput' %>
-<% end %>
+<div id="searchContainer">
+  <div id="searchText">JSON Search</div>
+  <%= text_field_tag :query, params[:query], id: 'searchInput', placeholder: 'Type to search...' %>
+</div>
 
 <div id="searchResults">
 </div>
 
-<%= javascript_include_tag 'search' %>
+</body>
+</html>

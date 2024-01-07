@@ -34,13 +34,33 @@ document.addEventListener('DOMContentLoaded', function () {
         resultsContainer.innerHTML = '';
 
         if (results.length > 0) {
+            var table = document.createElement('table');
+            table.className = 'results-table';
+
+            // Table header
+            var headerRow = document.createElement('tr');
+            for (var key in results[0]) {
+                var headerCell = document.createElement('th');
+                headerCell.textContent = key;
+                headerRow.appendChild(headerCell);
+            }
+            table.appendChild(headerRow);
+
+            // Table body
             results.forEach(function (result) {
-                var resultElement = document.createElement('div');
-                resultElement.textContent = JSON.stringify(result);
-                resultsContainer.appendChild(resultElement);
+                var row = document.createElement('tr');
+                for (var key in result) {
+                    var cell = document.createElement('td');
+                    cell.textContent = result[key];
+                    row.appendChild(cell);
+                }
+                table.appendChild(row);
             });
+
+            resultsContainer.appendChild(table);
         } else {
-            resultsContainer.textContent = 'No results found.';
+            resultsContainer.innerHTML = '<p class="no-results">No results found.</p>';
         }
     }
+
 });
