@@ -1,4 +1,6 @@
-# TestApp
+# Json Searcher
+
+This is a simple application that allows you to search results for a specific words in a json file. The application is based on requirements from [here](https://gist.github.com/g3d/d0b84a045dd6900ca4cb).
 
 The setups steps expect following tools installed on the system.
 
