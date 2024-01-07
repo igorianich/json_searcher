@@ -1,24 +1,19 @@
-# README
+# TestApp
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+The setups steps expect following tools installed on the system.
 
-Things you may want to cover:
+- Github
+- Ruby [3.0.0](https://www.ruby-lang.org/en/downloads/)
+- Rails [7.1.2](https://rubyonrails.org/)
 
-* Ruby version
+#### 1. Check out the repository
 
-* System dependencies
+```bash
+git clone git@github.com:igorianich/json_searcher.git
 
-* Configuration
+```
+#### 2. Enter the project folder and run server
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```bash
+rails s
+```
