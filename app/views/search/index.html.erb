@@ -6,13 +6,11 @@
 </head>
 <body>
 
-<div id="searchContainer">
-  <div id="searchText">JSON Search</div>
-  <%= text_field_tag :query, params[:query], id: 'searchInput', placeholder: 'Type to search...' %>
-</div>
-
-<div id="searchResults">
-</div>
+  <div id="searchContainer">
+    <div id="searchText">JSON Search</div>
+    <%= text_field_tag :query, params[:query], id: 'searchInput', placeholder: 'Type to search...' %>
+    <div id="searchResults"></div>
+  </div>
 
 </body>
 </html>
