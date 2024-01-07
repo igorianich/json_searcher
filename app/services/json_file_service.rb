@@ -13,7 +13,7 @@ class JsonFileService
       match_item?(item, query)
     end
 
-    result.sort_by! { |item| relevance(item, query)}.reverse #sorts the results by relevance
+    result = result.sort_by { |item| relevance(item, query)}.reverse #sorts the results by relevance
 
     result #returns the results
   end
@@ -37,14 +37,18 @@ class JsonFileService
   def self.relevance(item, query) #calculates the relevance of the item to the query
     query_parts = query.downcase.split # the same as in match_item?
     item_values = item.values.map(&:downcase)
+    item_values.map! {|value| value.split(',')}.flatten! #splits the item values into parts
+    item_values.map!( &:strip ) #strips the item values of whitespace
 
     relevance_score = 0 #initializes the relevance score
 
     query_parts.each do |part|
-      if !part.start_with?('-') && item_values.any? { |value| value.include?(part) } #if the part does not start with a dash and the item values include the part
+      if !part.start_with?('-') && item_values.any? { |value| value == part } #if the part does not start with a dash and the item values include the part
         relevance_score += 1 #adds 1 to the relevance score
       end
     end
+
+    relevance_score #returns the relevance score
   end
 
 

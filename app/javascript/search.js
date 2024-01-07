@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
     searchInput.addEventListener('input', function () {
         var searchQuery = searchInput.value.trim();
 
-        if (searchQuery.length >= 2) {
+        if (searchQuery.length >= 1) {
             searchOnServer(searchQuery);
         } else {
             resultsContainer.innerHTML = '';
