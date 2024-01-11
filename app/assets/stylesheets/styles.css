@@ -7,7 +7,7 @@
 #searchContainer {
     text-align: center;
     margin-top: 20px;
-    position: fixed;
+    position: relative;
     top: 0;
     width: 100%;
     background-color: #a48a8a;
@@ -51,4 +51,5 @@ body {
     padding: 0;
     font-family: Arial, sans-serif;
     background-color : #b59898;
+    overflow-y: scroll;
 }
