@@ -3,7 +3,10 @@ class JsonFileService
   JSON_FILE_PATH = Rails.root.join('public', 'search_data.json') # sets the path to the json file
 
   def self.load_data
-    @load_data ||= load_json # returns the json data if it exists, otherwise it loads it
+    @load_data ||= JSON.parse(File.read(JSON_FILE_PATH)) # returns the json data if it exists, otherwise it loads it
+  rescue StandardError => e
+    Rails.logger.error("Error loading JSON file: #{e.message}")
+    {}
   end
 
   def self.search(query)
@@ -50,13 +53,5 @@ class JsonFileService
     end
 
     relevance_score # returns the relevance score
-  end
-
-  # loads the json file
-  def self.load_json
-    JSON.parse(File.read(JSON_FILE_PATH))
-  rescue StandardError => e
-    Rails.logger.error("Error loading JSON file: #{e.message}")
-    {}
   end
 end
