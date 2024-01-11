@@ -12,10 +12,18 @@ The setups steps expect following tools installed on the system.
 
 ```bash
 git clone git@github.com:igorianich/json_searcher.git
+```
+
+#### 2. Install gems
+
+```bash
+bundle install
 
 ```
-#### 2. Enter the project folder and run server
+#### 3. Enter the project folder and run server
 
 ```bash
 rails s
 ```
+
+#### 4. Open the browser and go to [localhost:3000](http://localhost:3000/)
