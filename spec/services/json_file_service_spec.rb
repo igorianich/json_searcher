@@ -72,4 +72,78 @@ describe JsonFileService do
       end
     end
   end
+
+  describe '.match_item?' do
+    subject { described_class.match_item?(item, query) }
+    let(:item) { { 'Name' => 'D', 'Type' => 'Array', 'Designed by' => 'John Backus' } }
+
+    context 'when the item matches the query' do
+      let(:query) { 'John' }
+
+      it 'returns true' do
+        expect(subject).to be_truthy
+      end
+    end
+
+    context 'when the item does not match the query' do
+      let(:query) { 'Johnson' }
+
+      it 'returns false' do
+        expect(subject).to be_falsey
+      end
+    end
+
+    context 'when the item matches the query with negative word' do
+      let(:query) { 'John -Array' }
+
+      it 'returns false' do
+        expect(subject).to be_falsey
+      end
+    end
+
+    context 'when the item matches the query by few words' do
+      let(:query) { 'John Array' }
+
+      it 'returns true' do
+        expect(subject).to be_truthy
+      end
+    end
+
+    context 'when the item matches the query by few words with negative word' do
+      let(:query) { 'John Array -D' }
+
+      it 'returns false' do
+        expect(subject).to be_falsey
+      end
+    end
+  end
+
+  describe '.relevance' do
+    subject { described_class.relevance(item, query) }
+    let(:item) { { 'Name' => 'D', 'Type' => 'Array', 'Designed by' => 'John Backus' } }
+
+    context 'when the query matches one item key value' do
+      let(:query) { 'Array' }
+
+      it 'returns 1' do
+        expect(subject).to eq(1)
+      end
+    end
+
+    context 'when the query matches two item key values' do
+      let(:query) { 'Array D' }
+
+      it 'returns 2' do
+        expect(subject).to eq(2)
+      end
+    end
+
+    context 'when the query matches one item key value and one negative word' do
+      let(:query) { 'Array -D' }
+
+      it 'returns 1' do
+        expect(subject).to eq(1)
+      end
+    end
+  end
 end
