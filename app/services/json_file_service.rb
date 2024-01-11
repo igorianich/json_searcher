@@ -2,7 +2,7 @@
 class JsonFileService
   JSON_FILE_PATH = Rails.root.join('public', 'search_data.json') # sets the path to the json file
 
-  attr_reader :json_data, :query_parts
+
 
   def initialize(query = '', json_file_path = JSON_FILE_PATH)
     @json_data = JSON.parse(File.read(json_file_path)) # reads the json file
@@ -23,6 +23,8 @@ class JsonFileService
   end
 
   private
+
+  attr_reader :json_data, :query_parts
 
   # checks if the item matches the query
   def query_match_item?(item)
