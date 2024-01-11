@@ -2,30 +2,30 @@
 class JsonFileService
   JSON_FILE_PATH = Rails.root.join('public', 'search_data.json') # sets the path to the json file
 
-  def self.load_data
-    @load_data ||= JSON.parse(File.read(JSON_FILE_PATH)) # returns the json data if it exists, otherwise it loads it
+  attr_reader :json_data, :query_parts
+
+  def initialize(query = '', json_file_path = JSON_FILE_PATH)
+    @json_data = JSON.parse(File.read(json_file_path)) # reads the json file
+    @query_parts = query.downcase.split # splits the query into parts
   rescue StandardError => e
     Rails.logger.error("Error loading JSON file: #{e.message}")
-    {}
+    @json_data = {}
   end
 
-  def self.search(query)
-    data = load_data # loads the json data
-    return [] unless data.is_a?(Array) # returns an empty array if the data is not an array
+  def search
+    return [] unless json_data.is_a?(Array) # returns an empty array if the data is not an array
 
-    result = data.select do |item| # selects the items that match the query
-      match_item?(item, query)
+    result = json_data.select do |item| # selects the items that match the query
+      query_match_item?(item)
     end
 
-    result.sort_by { |item| relevance(item, query) }.reverse # sorts the results by relevance
-
-    # returns the results
+    result.sort_by { |item| get_relevance_score(item) }.reverse # sorts the results by relevance_score
   end
 
-  # checks if the item matches the query
-  def self.match_item?(item, query)
-    query_parts = query.downcase.split # splits the query into parts
+  private
 
+  # checks if the item matches the query
+  def query_match_item?(item)
     item_values = item.values.map(&:downcase) # gets the values of the item and downcases them
     query_parts.all? do |part|
       # logic for negative search
@@ -37,10 +37,9 @@ class JsonFileService
     end
   end
 
-  # calculates the relevance of the item to the query
-  def self.relevance(item, query)
-    query_parts = query.downcase.split # the same as in match_item?
-    item_values = item.values.map(&:downcase)
+  # calculates the relevance_score of the item to the query
+  def get_relevance_score(item)
+    item_values = item.values.map(&:downcase) # gets the values of the item and downcases them
     item_values.map! { |value| value.split(',') }.flatten! # splits the item values into parts
     item_values.map!(&:strip) # strips the item values of whitespace
 
